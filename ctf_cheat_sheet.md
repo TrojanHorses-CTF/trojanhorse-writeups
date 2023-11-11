@@ -103,6 +103,18 @@ Search inside files to find specified string
 * $ grep pico flag.txt
 * $ grep -r pico
 
+# head
+### Description:
+Prints the first 10 lines of a file (or command output if used with `pipe`)
+
+### Usage:
+* $ head filename
+* $ command | head
+
+### Examples:
+* $ head script.py
+* $ ls -l | head
+
 # ls
 ### Description:
 Print to the terminal what's in a directory
@@ -194,7 +206,8 @@ You will probably be prompted with a question asking `Are you sure you want to c
 
 # vim
 ### Description:
-Open/Create/Edit/Search a file
+* Open/Create/Edit/Search a file
+* `vi` is a different commaned that does the same thing as `vim`
 
 ### Usage: 
 $ vim filename
@@ -229,6 +242,19 @@ $ vim flag.txt
 * ^c
     * Press `c` while holding the `control` key down (ctrl-c)
     * Quit out of most programs when they're running. It kills the progam/terminal command that's currently executing.
+
+# `|` aka pipe
+### Description:
+* This isn't a command
+* It passes the output of the first command as the input to the second command
+
+### Usage:
+$ command1 | command2
+
+### Examples:
+* $ ls | grep "Do"
+* $ cat names.txt | sort
+* $ cat names.txt | sort | unique
 
 # Firefox
 ### Web exploitation tips:
@@ -279,6 +305,9 @@ This isn't a terminal command. It's a sequence of characters that forms a search
 # Base64 File Decoder
 * https://www.base64decode.org/
     * You can drag and drop an entire Base64 encoded file into this web tool, and it will return the decoded file.
+
+# ASCII Table
+* https://coding.tools/ascii-table
 
 # OSINT
 * It stands for open source intelligence. It's the gathering of information from publicly available sources, such as social media, company websites, and news articles. There is a great deal of information that can be gathered about a company or person through open source intelligence.
