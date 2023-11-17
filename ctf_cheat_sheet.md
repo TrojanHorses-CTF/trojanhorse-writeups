@@ -257,7 +257,7 @@ $ command1 | command2
 * $ cat names.txt | sort | unique
 
 # Firefox
-### Web exploitation tips:
+### Web Exploitation Tips:
 * `html`: Right-click the page and click `View Page Source`
 * `js`: Right-click the page, click `Inspect`, click the `Debugger` tab, then click around in the drop-down folders on the left to find `.js` files
 * `css`: Right-click the page, click `Inspect`, then click `Style Editor`.
@@ -299,7 +299,7 @@ This isn't a terminal command. It's a sequence of characters that forms a search
     * For some reason, some converters online just don't work!
 
 # JSON Beautifier
-* https://codebeautify.org/jsonviewer
+* http://www.jsnice.org/
     * Pass messy JSON (ex. JSON that's crammed onto one line) into this web tool, and it will add perfect spacing to it, making it much more readable.
 
 # Base64 File Decoder
