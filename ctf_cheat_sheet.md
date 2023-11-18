@@ -243,9 +243,10 @@ $ vim flag.txt
     * Press `c` while holding the `control` key down (ctrl-c)
     * Quit out of most programs when they're running. It kills the progam/terminal command that's currently executing.
 
-# `|` aka pipe
+# Pipe
 ### Description:
 * This isn't a command
+* It's this character-> |
 * It passes the output of the first command as the input to the second command
 
 ### Usage:
@@ -290,23 +291,80 @@ $ command1 | command2
 * Watch the search bar as you navigate to and within a website, looking for any redirections happening.
     * Or use wireshark to do this. Maybe follow http(s) stream.
 * `phps` files are php source files; check for the `index.phps` file by adding it to the end of the url: http://mercury.picoctf.net:14804/index.phps
+    * Note: don't include the `s` at the end of `phps` when running a command like `curl` on a file like `authentication.phps`
+        * Example of how TO do it: `$ curl http://mercury.picoctf.net:14804/authentication.php`
+
+* PHP Sandbox
+    * https://onlinephp.io/
+    * Allows you to run (and therefore test) PHP code
+* `flask-unsign`
+    * Description: Command line tool to fetch, decode, brute-force and craft session cookies of a Flask application by guessing secret keys.
+    * How to Install: `pip3 install flask-unsign`
+    * Usage (see `Most Cookies` on picoGym and the [solution](https://github.com/vivian-dai/PicoCTF2021-Writeup/blob/main/Web%20Exploitation/Most%20Cookies/MostCookies.md) for better understanding):
+        * `$ flask-unsign --decode --cookie 'eyJ2ZXJ5X2F1dGgiOiJibGFuayJ9.ZVeyiQ.bWA_2WeiTOts0OWM7Z0qaDhrFqs'`
+            * This decodes the cookie and prints it in the session cookie structure
+        * `$ flask-unsign --unsign --server 'http://mercury.picoctf.net:65344/' --wordlist wordlist.txt`
+            * This gets the secret key
+            * The `--server` value is the url of the web site/server
+            * The `--wordlist` value contains a new line separated list of the possible cookie values for the website(?) (the possible values could be found in a "server.py" script)
+* Encoding flask session cookies
+    * Use [this](https://github.com/noraj/flask-session-cookie-manager) tool
+    * Usage:
+        * `$ git clone https://github.com/noraj/flask-session-cookie-manager.git && cd flask-session-cookie-manager`
+            * This installs the tool
+        * `$ python -m venv venv`
+            * This creates the virtual environment
+        * `$ source venv/bin/activate`
+            * This makes your terminal enter the virtual environment
+        * `$ python setup.py install`
+            * This setups the virutal environment(?)
+        * `$ flask_session_cookie_manager3.py encode -s 'peanut butter' -t "{'very_auth':'admin'}"`
+            * `-s` is the secret key found with `flask-unsign`
+            * `-t` is your custom cookie in its session cookie structure 
+
+# SQL or sqlite3
+### Description:
+Usually used for sql injection in web exploitation challenges
+
+### Helpful Syntax:
+* `--` or `/*`
+    * This creates a comment in the query meaning whatever follows it is ignored
+    * Example: 
+        * `SELECT * FROM 'user_input_table' WHERE name != "flag"`
+        * Input `table'--` or `table'/*`
+            * Closes quotes for 'user_input_table'
+            * Changes query to either of these respectively:
+                * `SELECT * FROM 'table'--' WHERE name != "flag"`
+                * `SELECT * FROM 'table'/*' WHERE name != "flag"`
+            * Ignores the `WHERE` that prevents flag from being printed
+* `;`
+    * This ends the current query, allowing you to start a new one
+    * Example: 
+        * Original url: `http://mercury.picoctf.net:65344/items.php?id=2`
+            * Which results in `SELECT * FROM items WHERE ID = 2`
+        * Add `; SELECT * from flag_table` to url
+        * Resulting url: `http://mercury.picoctf.net:65344/items.php?id=2; SELECT * from flag_table`
+            * Which results in `SELECT * FROM items WHERE ID = 2; SELECT * from flag_table`
+            * Where `flag_table` contains a row with the flag
+
 
 # regex
 This isn't a terminal command. It's a sequence of characters that forms a search pattern. Check out this link for symbols and their examples: https://www.hallme.com/blog/the-power-of-regular-expressions/
 
-# Data Converter
+# Helpful Links
+#### Data Converter
 * https://www.rapidtables.com/convert/number/ascii-hex-bin-dec-converter.html
     * For some reason, some converters online just don't work!
 
-# JSON Beautifier
+### JSON Beautifier
 * http://www.jsnice.org/
     * Pass messy JSON (ex. JSON that's crammed onto one line) into this web tool, and it will add perfect spacing to it, making it much more readable.
 
-# Base64 File Decoder
+### Base64 File Decoder
 * https://www.base64decode.org/
     * You can drag and drop an entire Base64 encoded file into this web tool, and it will return the decoded file.
 
-# ASCII Table
+### ASCII Table
 * https://coding.tools/ascii-table
 
 # OSINT
