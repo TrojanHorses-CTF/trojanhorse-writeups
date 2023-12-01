@@ -267,7 +267,6 @@ $ vim flag.txt
 * `phps` files are php source files; check for the `index.phps` file by adding it to the end of the url: http://mercury.picoctf.net:14804/index.phps
     * Note: don't include the `s` at the end of `phps` when running a command like `curl` on a file like `authentication.phps`
         * Example of how TO do it: `$ curl http://mercury.picoctf.net:14804/authentication.php`
-
 * PHP Sandbox
     * https://onlinephp.io/
     * Allows you to run (and therefore test) PHP code
@@ -298,6 +297,22 @@ $ vim flag.txt
 * Accessing errors on web server: (this could be wrong/unhelpful in some way)
     * Errors are stored in files on web servers and can be accessed via the url + ?error= + filename_without_extension
         * e.g. https://notepad.mars.picoctf.net/?error=bad_content will return bad_content.html
+* JSON Web Tokens (JWT)
+    * They provide a compact and self-contained way for securely transmitting information between parties as a JSON object.
+    * JWT cookies can be found here in the `Inspect` tools and will always have a `name` field containing "`token`":
+    ![They can be found here](JWT_cheat_sheet.png)
+    * JWT cookies always have two `.` separators
+        * e.g. `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdXRoIjoxNzAxMzg0Mjk4MTM1LCJhZ2VudCI6Ik1vemlsbGEvNS4wIChNYWNpbnRvc2g7IEludGVsIE1hYyBPUyBYIDEwLjE1OyBydjoxMjAuMCkgR2Vja28vMjAxMDAxMDEgRmlyZWZveC8xMjAuMCIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzAxMzg0Mjk4fQ.WRYkuNljVpKYk7b4q1CmPahMb3Mc_iGaDoGWvbSM2jU`
+    * Use https://jwt.io/ to encode/decode JWT cookies
+    * [JWT none algorithm vulnerability](https://portswigger.net/kb/issues/00200901_jwt-none-algorithm-supported)
+        * How to exploit:
+            * Login to site as normal user
+            * Generate new header (make sure to remove any `=` at the end of the output): `$ echo -n '{"typ":"JWT","alg":"none"}' | base64`
+            * Copy the prexisting JWT cookie from the `Inspect` tools and paste it in https://jwt.io/
+            * Edit the payload in https://jwt.io/ to have `"role": "admin"`
+            * Merge the new header and new payload, separate them with a `.`, and add a `.` to the end: `eyJ0eXAiOiJKV1QiLCJhbGciOiJub25lIn0.eyJhdXRoIjoxNjc0ODEwNjQ1MDIyLCJhZ2VudCI6InRlc3QxMjMiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE1NzMzNTgzOTZ9.`
+            * Replace prexisting JWT cookie with the JWT cookie you just created and refresh the page
+
 
 # SQL/psql/sqlite3 
 ### Description:
@@ -459,6 +474,10 @@ This isn't a terminal command. It's a sequence of characters that forms a search
 
 # PWN
 Binary exploitation challenges (pronounced "pone" I think)
+
+# Helpful Advice
+* If you are stuck on a challenge, google and read writeups for PicoCTF challenges in that same category, especially ones you've previously completed. This may remind you of helpful techniques and tools OR, when reading about PicoCTF challenges you haven't solved yet, expose you to some new technique or tool that will be helpful on your current challenge.
+    * For example, google `notepad picoctf` (notepad is the name of a PicoCTF challenge) and click on any of the links!
 
 # NOT YET TAUGHT/EXPLORED
 * ROT13
